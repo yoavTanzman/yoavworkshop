@@ -1,0 +1,18 @@
+    /**This problem is with 2 farmers picking apples from trees and the idea is to provide the best solution
+    I think this one is a great one.
+    **/
+    
+    
+    public  static int solution(int[] A, int K, int L) {
+
+        if(K==L) return -1;
+        
+        
+                int totalApple = Arrays.stream(Arrays.copyOfRange(A,K-1,A.length-L)).sum()+
+                Arrays.stream(Arrays.copyOfRange(A,A.length-L,A.length)).sum();
+
+        System.out.println(totalApple);
+
+        return  totalApple;
+        
+        }
