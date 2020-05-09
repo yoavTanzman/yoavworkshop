@@ -1,0 +1,206 @@
+import java.util.Random;
+
+/**
+ * Author Yoav Tanzmamn
+ * Date 05/05/2020
+ */
+public class IslandProblem {
+
+
+    /**
+     * the method calculate the number of island in a matrix, with no weights (the classic island problem 0 and 1)
+     * it uses a supporting method dfs
+     * @param grid
+     * @return
+     */
+    public int numOfIsland(char [] [] grid){
+
+        if(grid == null || grid.length==0) {
+            return 0;
+        }
+        int numberOfIsland=0;
+        for (int i = 0; i<grid.length;i++){
+            for (int j=0;j<grid[i].length;j++){
+                if(grid[i][j] !='0'){
+                    numberOfIsland += dfs(grid ,i,j);
+                }
+            }
+        }
+
+        return numberOfIsland;
+
+    }
+
+    /**
+     * this method is a simple recursive implementation of dfs, note that it is for matrix with no weights (zero and one only).
+     * (the classic island problem 0 and 1)
+     * @param grid
+     * @param i
+     * @param j
+     * @return
+     */
+
+    public int dfs(char [] [] grid ,int i , int j){
+
+        if(i<0 || i>=grid.length || j<0 || j>= grid[i].length || grid[i][j]=='0' ){
+            return 0;
+
+        }
+        grid[i][j]='0';
+        dfs(grid,i+1,j);
+        dfs(grid,i-1,j);
+        dfs(grid,i,j+1);
+        dfs(grid,i,j-1);
+        return 1;
+    }
+
+    /**
+     * this method is a simple recursive implementation of dfs, note that it is for matrix.
+     * @param grid
+     * @return
+     */
+
+    public int numOfIslandWithWeights(char [] [] grid){
+
+        if(grid == null || grid.length==0) {
+            return 0;
+        }
+        int numberOfIsland=0;
+        for (int i = 0; i<grid.length;i++){
+            for (int j=0;j<grid[i].length;j++){
+                if(grid[i][j] !='0'){
+                    char c = Character.valueOf(grid[i][j]);
+
+                    numberOfIsland += dfsWithWeights(grid ,i,j,c);
+                }
+            }
+        }
+
+        return numberOfIsland;
+
+    }
+
+    /**
+     * this method is a simple recursive implementation of dfs, note that it is for matrix with no weights
+     * @param grid
+     * @param i
+     * @param j
+     * @param c
+     * @return
+     */
+
+    public int dfsWithWeights(char [] [] grid ,int i , int j,char c){
+
+
+        if(i<0 || i>=grid.length || j<0 || j>= grid[i].length || grid[i][j]!=c){
+            return 0;
+
+        }
+
+        grid[i][j]='0';
+        dfsWithWeights(grid,i+1,j,c);
+        dfsWithWeights(grid,i-1,j,c);
+        dfsWithWeights(grid,i,j+1,c);
+        dfsWithWeights(grid,i,j-1,c);
+        System.out.println("------------------");
+        System.out.println(c);
+        System.out.println("------------------");
+        printMat(grid);
+        System.out.println("------------------");
+        return 1;
+    }
+
+
+
+
+     public static char[][] randomMat(int n,int m ){
+
+        char [] [] grid = new char[n][m];
+         for (int i = 0; i<grid.length;i++) {
+             for (int j = 0; j < grid[i].length; j++) {
+
+
+                 long random=  Math.round( Math.random() );
+
+                 if(random==0 ) {
+                     grid[i][j]='0';
+
+                 }
+                 else {
+                     grid[i][j] = '1';
+                 }
+
+             }
+
+         }
+    return grid;
+
+     }
+
+    /**
+     * method to generate a matrix with random ints between 0 and a number
+     * @param n
+     * @param m
+     * @param maxNum
+     * @return
+     */
+
+    public static char[][] randomMatZeroToRandom(int n,int m, int maxNum ){
+
+        char [] [] grid = new char[n][m];
+        for (int i = 0; i<grid.length;i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+
+
+                Random r = new Random();
+                int low = 0;
+                int high = maxNum;
+                int result = r.nextInt(high-low) + low;
+
+                char randomChar = (char) (result+'0');
+                grid[i][j] = randomChar;
+            }
+
+        }
+        return grid;
+
+    }
+
+    /**
+     * print matrix of char method
+     * @param grid
+     */
+
+     public static void printMat(char [] [] grid){
+
+        for(int i = 0 ; i<grid.length;i++){
+            for(int j=0;j<grid[i].length;j++){
+
+                System.out.print(grid[i][j]+" ");
+            }
+            System.out.println();
+        }
+     }
+
+    /**
+     * main class testing both the classic and not weighted island problem
+     * @param args
+     */
+
+
+    public static void main(String [] args){
+
+        IslandProblem islandProblem = new IslandProblem();
+//        char [] [] charMat = IslandProblem.randomMat(3,5);
+//        printMat(charMat);
+//       System.out.println(islandProblem.numOfIsland(charMat));
+        char [] [] charMat1 = IslandProblem.randomMatZeroToRandom(5,5,4);
+
+
+        printMat(charMat1);
+        System.out.println(islandProblem.numOfIslandWithWeights(charMat1));
+    }
+
+
+
+}
