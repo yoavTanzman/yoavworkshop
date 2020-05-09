@@ -1,0 +1,50 @@
+public static int diceFlip(int [] A){
+        int[] pos_counts = {0, 0, 0, 0, 0, 0, 0};
+        for (int start_pos : A)
+            pos_counts[start_pos] += 1;
+
+
+        // Initilize our accumulators for minimum flips and which position that was
+        int min_flips = Integer.MAX_VALUE;
+        int min_flip_pos = 0;
+
+        // Consider each of the 6 dice positions...
+        for (int position = 1 ; position <= 6 ; position++) {
+
+            // initialize the number of flips
+            int flips = 0;
+
+            // Go through all the dice starting positions and tally up the flips necessary to get all dice to the position
+            // we are considering
+            for (int start_pos = 1 ;  start_pos <= 6 ; start_pos++) {
+                if (start_pos + position == 7)  // opposite sides of a dice always add up to 7
+                    flips += 2 * pos_counts[start_pos];
+                else if (start_pos != position)
+                    flips += pos_counts[start_pos];
+            }
+
+            // If this is a smaller number of flips than we've seen before, record it as the new best choice
+            if (flips < min_flips) {
+                min_flips = flips;
+                min_flip_pos = position;
+            }
+           //  System.out.println(String.format("%d flips to die position %d", min_flips, min_flip_pos));
+        }
+
+            return min_flips;
+    }
+    
+    public static void main(String []args){
+    
+        int [] A = {1,1,6};
+        int [] B = {1,2,3};
+        int [] C = {1,6,2,3,5,3,2,1,1};
+
+        System.out.println("===============================Dice flip=============================");
+
+        System.out.println(diceFlip(A));
+        System.out.println(diceFlip(B));
+        System.out.println(diceFlip(C));
+
+
+    }
