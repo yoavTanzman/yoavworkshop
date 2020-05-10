@@ -1,0 +1,84 @@
+/**
+Givven an array of N numbers return the biggest number x,
+
+example [3,8,2,3,2,2] return 3 
+
+2 return 3 times 
+3 return 2 times  
+3>2 return 3 
+
+/**
+
+/**
+using map and orderingBy
+**/
+public int greaterAndRepitableUsingMap(int [] a){
+
+        ArrayList<Integer> arrayList = (ArrayList<Integer>) Arrays.stream(a).sorted()
+                .boxed().collect(Collectors.toList());
+        Map<Integer,Long>countMap =arrayList.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        List<Integer> longList = new ArrayList<>();
+        Stream<Map.Entry<Integer,Long>> sorted =
+                countMap.entrySet().stream()
+                        .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+        sorted.forEach(temp->{
+//            System.out.println(temp.getKey());
+            long temp1=temp.getKey();
+            int longInt = (int) temp1;
+            longList.add(longInt);
+        });
+
+        if(longList.get(0)>longList.get(1)) return longList.get(0);
+        return  longList.get(1);
+
+
+    }
+    
+    
+    /**
+     using for loop
+    
+    **/
+        public int greaterAndRepitable(int [] a) {
+
+//        Map<Integer, Long> countMap = new HashMap<>();
+        ArrayList<Integer> arrayList = (ArrayList<Integer>) Arrays.stream(a).sorted()
+                .boxed().collect(Collectors.toList());
+//        System.out.println(arrayList);
+        List<Integer> removeDuplicates = new ArrayList<>(
+                new HashSet<>(arrayList));
+        int primeCount = 0;
+        int subcount = 0;
+        int firstValue = 0, secondvalue = 0;
+
+        for (int i : removeDuplicates) {
+            int temp = Collections.frequency(arrayList, i);
+
+            if (temp > 2 && temp > primeCount) {
+                primeCount = temp;
+                firstValue = i;
+            } else if (temp > 2 && temp > secondvalue) {
+                subcount = temp;
+                secondvalue = i;
+            }
+
+        }
+        if(firstValue==0) return 0;
+        else if (firstValue>secondvalue ) return firstValue;
+        return secondvalue;
+    }
+    
+    public static void main(string [] args ){
+            int[] a = {1,1,1,2,1,5,9,5,9,5};
+        IngTest ingTest = new IngTest();
+//        System.out.println(ingTest.greaterAndRepitable(a));
+        System.out.println(ingTest.greaterAndRepitableUsingMap(a));
+    
+    
+    }
+
+    
+    
+    
+    
+    
