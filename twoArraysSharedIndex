@@ -1,0 +1,51 @@
+  public static int sharedIndex(int [] a, int [] b) {
+
+        if(a.length!=b.length) return 0;
+        List<Integer> indexInteger= new ArrayList<>();
+
+
+        for(int i=0;i<a.length-1;i++){
+
+           int  totalResult= Arrays.stream(Arrays.copyOfRange(a,0,i+1)).sum()-
+                   Arrays.stream(Arrays.copyOfRange(a,i+1,a.length)).sum();
+
+            if(totalResult == 0){
+
+                int sumArray2 = Arrays.stream(Arrays.copyOfRange(b,0,i+1)).sum()-
+                        Arrays.stream(Arrays.copyOfRange(b,i+1,b.length)).sum();
+                if(sumArray2==0 &&
+                        Arrays.stream(Arrays.copyOfRange(b,0,i+1)).sum()==
+                                Arrays.stream(Arrays.copyOfRange(a,0,i+1)).sum()
+                ) {
+                    indexInteger.add(i);
+                }
+
+            }
+
+
+
+        }
+
+        System.out.println("=========number of indexes============");
+        return indexInteger.size();
+
+    }
+    
+    
+    public static void main (String [] args){
+            int[] a = {4,-1,0,3};
+        int[] a1 = {-2,5,0,3};
+//
+        int [] b={2,-2,-3,3};
+        int []b1={0,0,-4,4};
+
+        int [] c={4,-1,0,3};
+        int []c1={-2,6,0,4};
+
+              System.out.println(sharedIndex(a,a1));
+        System.out.println(sharedIndex(b,b1));
+        System.out.println(sharedIndex(c,c1));
+    
+    
+    
+    }
