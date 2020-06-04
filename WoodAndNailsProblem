@@ -1,0 +1,37 @@
+
+    //Wood and nails Problem with two solotions one as a List and One As an Arr
+    
+    public static int solution(int[] A, int y) {
+
+        ArrayList<Integer> arrayList = (ArrayList<Integer>) Arrays.stream(A).sorted()
+                .boxed().collect(Collectors.toList());
+//        arrayList.stream().forEach(System.out::println);
+
+        int beginning = 0 ;
+        int best = 0;
+
+        while(beginning<arrayList.size()){
+            int end = beginning;
+            while (end<arrayList.size()&& arrayList.get(end)==arrayList.get(beginning)){
+                ++end;
+            }
+            best = Math.max(best,end-beginning+Math.min(y,arrayList.size()-end));
+            beginning= end ;
+
+        }
+        return best;
+//
+//        int beginning = 0 ;
+//        int best =0;
+//        int arrSize = A.length;
+//        while(beginning<arrSize){
+//            int end = beginning;
+//            while (end < arrSize && A[end]==A[beginning]){
+//                ++end;
+//            }
+//            best = Math.max(best,end-beginning+Math.min(y,arrSize-end));
+//            beginning = end;
+//        }
+//        return best;
+
+    }
